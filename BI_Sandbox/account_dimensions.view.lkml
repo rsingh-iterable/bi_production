@@ -308,6 +308,8 @@ view: account_dimensions {
 
   measure: count {
     type: count
+    sql_distinct_key: ${account_id} ;;
+    label: "# of Accounts"
     drill_fields: [account_name]
   }
 }
