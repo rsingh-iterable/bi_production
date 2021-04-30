@@ -14,13 +14,11 @@ fiscal_month_offset: -11
 explore: account_changes_monthly {
   label: "Account Changes Monthly"
   view_label: "Account Changes Monthly"
-  join: all_customers {
-   relationship: many_to_one
-     sql_on: ${account_changes_monthly.sfdc_account_id} = ${all_customers.account_id} ;;
-    view_label: "Customer Spine"
-   }
-
-
+  join: account_dimensions {
+    relationship: many_to_one
+    sql_on: ${account_dimensions.account_id} = ${account_changes_monthly.sfdc_account_id} ;;
+    view_label: "Account Dimensions"
+  }
   }
 #
 #   join: users {

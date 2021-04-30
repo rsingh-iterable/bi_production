@@ -15,8 +15,8 @@ view: account_changes_monthly {
   }
 
   measure: addons_o_arr_end {
-    type: number
-    sql: ${addons_o_mrr_end}*12 ;;
+    type: sum
+    sql: ${TABLE}."ADDONS_O_MRR_END" * 12 ;;
     label: "ADDONS_O_ARR_END"
     group_label: "AddOns Overages"
     value_format: "$#.00;($#.00)"
@@ -30,8 +30,8 @@ view: account_changes_monthly {
   }
 
   measure: addons_o_arr_start {
-    type: number
-    sql: ${addons_o_mrr_start}*12 ;;
+    type: sum
+    sql: ${TABLE}."ADDONS_O_MRR_START" *12 ;;
     label: "ADDONS_O_ARR_START"
     group_label: "AddOns Overages"
     value_format: "$#.00;($#.00)"
@@ -57,16 +57,16 @@ view: account_changes_monthly {
     sql: ${TABLE}."C_MRR_END" ;;
     label: "C_MRR_END"
     drill_fields: [sfdc_account_id,account_name,start_period_date,c_mrr_start,c_mrr_end]
-    value_format: "$#.00;($#.00)"
+    value_format: "$#,##0"
   }
 
   measure: c_arr_end {
-    type: number
-    sql: ${c_mrr_end} *12 ;;
+    type: sum
+    sql: ${TABLE}."C_MRR_END" * 12 ;;
     label: "C_ARR_END"
     drill_fields: [sfdc_account_id,account_name,start_period_date,c_mrr_start,c_mrr_end]
     group_label: "Commited Revenue"
-    value_format: "$#.00;($#.00)"
+    value_format: "$#,##0"
   }
 
   measure: c_mrr_start {
@@ -77,8 +77,8 @@ view: account_changes_monthly {
   }
 
   measure: c_arr_start {
-    type: number
-    sql: ${c_mrr_start} * 12 ;;
+    type: sum
+    sql: ${TABLE}."C_MRR_START" * 12 ;;
     label: "C_ARR_START"
     drill_fields: [sfdc_account_id,account_name,start_period_date,c_arr_start,c_arr_end]
     group_label: "Commited Revenue"
@@ -107,19 +107,19 @@ view: account_changes_monthly {
 
   measure: churn_mrr {
     type: sum
-    sql: ${TABLE}."CHURN_MRR" * -1 ;;
+    sql: ${TABLE}."CHURN_MRR"  ;;
     label: "CHURN_MRR"
     group_label: "Churn"
-    value_format: "$#.00;($#.00)"
+    value_format: "$#,##0"
   }
 
   measure: churn_arr {
-    type: number
-    sql: ${churn_mrr} * -12 ;;
+    type: sum
+    sql: ${TABLE}."CHURN_MRR" * 12  ;;
     label: "CHURN_ARR"
     drill_fields: [sfdc_account_id,account_name,start_period_date,c_arr_start,c_arr_end]
     group_label: "Churn"
-    value_format: "$#.00;($#.00)"
+    value_format: "$#,##0"
   }
 
   measure: deliverability_o_mrr_end {
@@ -139,15 +139,15 @@ view: account_changes_monthly {
     sql: ${TABLE}."DOWNGRADE_MRR" ;;
     label: "DOWNGRADE_MRR"
     group_label: "Downgrades"
-    value_format: "$#.00;($#.00)"
+    value_format: "$#,##0"
   }
 
   measure: downgrade_arr {
-    type: number
-    sql: ${downgrade_mrr} * 12 ;;
+    type: sum
+    sql: ${TABLE}."DOWNGRADE_MRR" * 12 ;;
     label: "DOWNGRADE_ARR"
     group_label: "Downgrades"
-    value_format: "$#.00;($#.00)"
+    value_format: "$#,##0"
   }
 
   measure: email_o_mrr_end {
@@ -198,27 +198,27 @@ view: account_changes_monthly {
   }
 
   measure: nl_arr {
-    type: number
-    sql: ${nl_mrr} * 12 ;;
+    type: sum
+    sql: ${TABLE}."NL_MRR"  * 12 ;;
     label: "NL_ARR"
     drill_fields: [sfdc_account_id,account_name,start_period_date,c_arr_start,c_arr_end]
     group_label: "New Lands"
-    value_format: "$#.00;($#.00)"
+    value_format: "$#,##0"
   }
 
   measure: o_mrr_end {
     type: sum
     sql: ${TABLE}."O_MRR_END" ;;
     label: "O_MRR_END"
-    value_format: "$#.00;($#.00)"
+    value_format: "$#,##0"
     group_label: "Overages"
   }
 
   measure: o_arr_end {
-    type: number
-    sql: ${o_mrr_end} * 12 ;;
+    type: sum
+    sql: ${TABLE}."O_MRR_END" * 12 ;;
     label: "O_ARR_END"
-    value_format: "$#.00;($#.00)"
+    value_format: "$#,##0"
     group_label: "Overages"
   }
 
@@ -226,15 +226,15 @@ view: account_changes_monthly {
     type: sum
     sql: ${TABLE}."O_MRR_START" ;;
     label: "O_MRR_START"
-    value_format: "$#.00;($#.00)"
+    value_format: "$#,##0"
     group_label: "Overages"
   }
 
   measure: o_arr_start {
-    type: number
-    sql: ${o_mrr_start} * 12 ;;
+    type: sum
+    sql: ${TABLE}."O_MRR_START"  * 12 ;;
     label: "O_ARR_START"
-    value_format: "$#.00;($#.00)"
+    value_format: "$#,##0"
     group_label: "Overages"
   }
 
@@ -373,42 +373,42 @@ view: account_changes_monthly {
     type: sum
     sql: ${TABLE}."T_MRR_END" ;;
     label: "T_MRR_END"
-    value_format: "$#.00;($#.00)"
+    value_format: "$#,##0"
   }
 
   measure: t_arr_end {
     type: number
     sql: ${t_mrr_end} * 12 ;;
     label: "T_ARR_END"
-    value_format: "$#.00;($#.00)"
+    value_format: "$#,##0"
   }
 
   measure: t_mrr_start {
     type: sum
     sql: ${TABLE}."T_MRR_START" ;;
     label: "T_MRR_START"
-    value_format: "$#.00;($#.00)"
+    value_format: "$#,##0"
   }
 
   measure: t_arr_start {
     type: number
     sql: ${t_mrr_start} * 12 ;;
     label: "T_ARR_START"
-    value_format: "$#.00;($#.00)"
+    value_format: "$#,##0"
   }
 
   measure: nn_mrr {
     type: number
     sql: ${nl_mrr} + ${upgrade_mrr} + ${downgrade_mrr} - ${churn_mrr}  ;;
     label: "NN_MRR"
-    value_format: "$#.00;($#.00)"
+    value_format: "$#,##0"
   }
 
   measure: nn_arr {
     type: number
     sql: ${nn_mrr} * 12 ;;
     label: "NN_ARR"
-    value_format: "$#.00;($#.00)"
+    value_format: "$#,##0"
     group_label: "Net New"
   }
 
@@ -417,15 +417,16 @@ view: account_changes_monthly {
     sql: ${TABLE}."UPGRADE_MRR" ;;
     label: "UPGRADE_MRR"
     group_label: "UPGRADES"
-    value_format: "$#.00;($#.00)"
+    value_format: "$#,##0"
   }
 
   measure: upgrade_arr {
-    type: number
-    sql: ${upgrade_mrr} * 12;;
+    type: sum
+    sql: ${TABLE}."UPGRADE_MRR" * 12;;
     label: "UPGRADE_ARR"
     group_label: "UPGRADES"
-    value_format: "$#.00;($#.00)"
+    drill_fields: [sfdc_account_id,account_name,start_period_date,c_arr_start,c_arr_end]
+    value_format: "$#,##0"
   }
 
   measure: count {
