@@ -20,6 +20,17 @@ explore: account_changes_monthly {
     view_label: "Account Dimensions"
   }
   }
+
+
+explore: account_changes_quarterly{
+  label: "Account Changes Quarterly"
+  view_label: "Account Changes Quarterly"
+  join: account_dimensions {
+    relationship: many_to_one
+    sql_on: ${account_dimensions.account_id} = ${account_changes_quarterly.account_id} ;;
+    view_label: "Account Dimensions"
+  }
+}
 #
 #   join: users {
 #     relationship: many_to_one
