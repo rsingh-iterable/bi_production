@@ -1,5 +1,5 @@
 view: account_changes_quarterly {
-  sql_table_name: "FT_TRANSFORMATION"."ACCOUNT_CHANGES_QUARTERLY"
+  sql_table_name: "DBT_RIYA"."ACCOUNT_CHANGES_QUARTERLY"
     ;;
 
   dimension: account_id {
