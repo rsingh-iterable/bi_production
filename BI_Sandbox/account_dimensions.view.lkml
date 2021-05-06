@@ -1,5 +1,5 @@
 view: account_dimensions {
-  sql_table_name: "FT_TRANSFORMATION"."ACCOUNT_DIMENSIONS"
+  sql_table_name: "DBT_RIYA"."ACCOUNT_DIMENSIONS"
     ;;
 
   dimension: account_id {
@@ -301,7 +301,7 @@ view: account_dimensions {
     sql: ${TABLE}."SALES_MARKET_SEGMENT" ;;
   }
 
-  dimension: market_segment_of_account {
+  dimension: MARKET_SEGMENT_OF_ACCOUNT {
     type: string
     sql: ${TABLE}."MARKET_SEGMENT_OF_ACCOUNT" ;;
   }
