@@ -301,6 +301,12 @@ view: account_dimensions {
     sql: ${TABLE}."SALES_MARKET_SEGMENT" ;;
   }
 
+  dimension: market_segment_of_account {
+    type: string
+    sql: ${TABLE}."MARKET_SEGMENT_OF_ACCOUNT" ;;
+  }
+
+
   dimension: sub_industry_mod {
     type: string
     sql: ${TABLE}."SUB_INDUSTRY_MOD" ;;
@@ -310,6 +316,28 @@ view: account_dimensions {
     type: count
     sql_distinct_key: ${account_id} ;;
     label: "# of Accounts"
+    drill_fields: [account_name]
+  }
+
+  measure: count_renewal {
+    type: count
+    sql_distinct_key: ${account_id} ;;
+    filters: {
+      field: account_changes_monthly.renewal_month
+      value: "1"
+    }
+    label: "# Renewal Accounts"
+    drill_fields: [account_name]
+  }
+
+  measure: count_churn {
+    type: count
+    sql_distinct_key: ${account_id} ;;
+    filters: {
+      field: account_changes_monthly.churn_month
+      value: "1"
+    }
+    label: "# Churned Accounts"
     drill_fields: [account_name]
   }
 }

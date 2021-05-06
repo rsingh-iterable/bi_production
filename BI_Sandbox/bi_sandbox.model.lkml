@@ -11,6 +11,7 @@ fiscal_month_offset: -11
 # # Select the views that should be a part of this model,
 # # and define the joins that connect them together.
 #
+
 explore: account_changes_monthly {
   label: "Account Changes Monthly"
   view_label: "Account Changes Monthly"
@@ -30,6 +31,12 @@ explore: account_changes_quarterly{
     sql_on: ${account_dimensions.account_id} = ${account_changes_quarterly.account_id} ;;
     view_label: "Account Dimensions"
   }
+  join: account_changes_monthly {
+    relationship: many_to_one
+    sql_on: ${account_dimensions.account_id} = ${account_changes_monthly.sfdc_account_id} ;;
+    view_label: "Account Changes Monthly"
+  }
+
 }
 #
 #   join: users {

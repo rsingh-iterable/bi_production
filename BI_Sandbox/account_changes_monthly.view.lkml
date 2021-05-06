@@ -99,8 +99,8 @@ view: account_changes_monthly {
     value_format: "$#.00;($#.00)"
   }
 
-  measure: churn_month {
-    type: sum
+  dimension: churn_month {
+    type: number
     sql: ${TABLE}."CHURN_MONTH" ;;
     label: "CHURN_MONTH"
   }
