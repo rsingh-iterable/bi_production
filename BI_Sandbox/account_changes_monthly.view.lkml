@@ -279,8 +279,8 @@ view: account_changes_monthly {
     label: "OPP_START_DATE"
   }
 
-  measure: renewal_month {
-    type: sum
+  dimension: renewal_month {
+    type: number
     sql: ${TABLE}."RENEWAL_MONTH" ;;
     label: "RENEWAL_MONTH"
   }
