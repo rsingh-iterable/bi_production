@@ -1,5 +1,5 @@
 view: src_sf_opportunty {
-  sql_table_name: "DBT_RIYA"."SRC_SF_OPPORTUNTY"
+  sql_table_name: "FT_TRANSFORMATION"."SRC_SF_OPPORTUNTY"
     ;;
   drill_fields: [id]
 

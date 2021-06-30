@@ -1,5 +1,5 @@
 view: account_dimensions {
-  sql_table_name: "DBT_RIYA"."ACCOUNT_DIMENSIONS"
+  sql_table_name: "FT_TRANSFORMATION"."ACCOUNT_DIMENSIONS"
     ;;
 
   dimension: account_id {
@@ -78,11 +78,6 @@ view: account_dimensions {
     sql: ${TABLE}."CONTAINS_WELLNESS" ;;
   }
 
-  dimension: cs_market_segment {
-    type: string
-    sql: ${TABLE}."CS_MARKET_SEGMENT" ;;
-  }
-
   dimension: dfox_lists_c {
     type: string
     sql: ${TABLE}."DFOX_LISTS_C" ;;
@@ -91,6 +86,22 @@ view: account_dimensions {
   measure: email_month_mod {
     type: sum
     sql: ${TABLE}."EMAIL_MONTH_MOD" ;;
+  }
+## MARKET SEGMENTS
+
+  dimension: cs_market_segment {
+    type: string
+    sql: ${TABLE}."CS_MARKET_SEGMENT" ;;
+  }
+
+  dimension: market_segment_of_account {
+    type: string
+    sql: ${TABLE}."MARKET_SEGMENT_OF_ACCOUNT" ;;
+  }
+
+  dimension: market_segment_of_owner {
+    type: string
+    sql: ${TABLE}."MARKET_SEGMENT_OF_OWNER" ;;
   }
 
   dimension_group: first_active {
@@ -181,10 +192,7 @@ view: account_dimensions {
     sql: ${TABLE}."INDUSTRY_MOD" ;;
   }
 
-  dimension: market_segment_of_owner {
-    type: string
-    sql: ${TABLE}."MARKET_SEGMENT_OF_OWNER" ;;
-  }
+
 
   measure: num_amplitude {
     type: sum
@@ -296,15 +304,6 @@ view: account_dimensions {
     sql: ${TABLE}."REGION_OF_OWNER" ;;
   }
 
-  dimension: sales_market_segment {
-    type: string
-    sql: ${TABLE}."SALES_MARKET_SEGMENT" ;;
-  }
-
-  dimension: MARKET_SEGMENT_OF_ACCOUNT {
-    type: string
-    sql: ${TABLE}."MARKET_SEGMENT_OF_ACCOUNT" ;;
-  }
 
 
   dimension: sub_industry_mod {

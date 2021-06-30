@@ -1,6 +1,25 @@
 view: account_changes_monthly {
-  sql_table_name: "DBT_RIYA"."ACCOUNT_CHANGES_MONTHLY"
-    ;;
+  derived_table: {
+    sql: SELECT A.*
+    ,C.FISCAL_YEARQUARTER
+    ,M.QUARTER_MAXDATE
+    ,M.QUARTER_MINDATE
+    ,CASE WHEN M.QUARTER_MAXDATE = A.START_PERIOD THEN TRUE ELSE FALSE END AS IS_MAX_DATE
+    ,CASE WHEN M.QUARTER_MINDATE = A.START_PERIOD THEN TRUE ELSE FALSE END AS IS_MIN_DATE
+    FROM FT_TRANSFORMATION.ACCOUNT_CHANGES_MONTHLY A
+    LEFT JOIN FT_TRANSFORMATION.CALENDAR_DIM_DATE C ON C.DATE_ACTUAL = A.START_PERIOD
+    LEFT JOIN (
+    SELECT
+    C.FISCAL_YEARQUARTER,
+    MAX(A.START_PERIOD) AS QUARTER_MAXDATE,
+    MIN(A.START_PERIOD) AS QUARTER_MINDATE
+    FROM FT_TRANSFORMATION.ACCOUNT_CHANGES_MONTHLY A
+    LEFT JOIN FT_TRANSFORMATION.CALENDAR_DIM_DATE C ON C.DATE_ACTUAL = A.START_PERIOD
+    GROUP BY C.FISCAL_YEARQUARTER) M ON M.FISCAL_YEARQUARTER = C.FISCAL_YEARQUARTER
+    ORDER BY START_PERIOD DESC
+       ;;
+  }
+
 
   dimension: account_name {
     type: string
@@ -82,7 +101,7 @@ view: account_changes_monthly {
     label: "C_ARR_START"
     drill_fields: [sfdc_account_id,account_name,start_period_date,c_arr_start,c_arr_end]
     group_label: "Commited Revenue"
-    value_format: "$#.00;($#.00)"
+    value_format: "$#,##0"
   }
 
   measure: catalog_o_mrr_end {
@@ -357,6 +376,7 @@ view: account_changes_monthly {
     label: "START_PERIOD"
   }
 
+
   measure: support_o_mrr_end {
     type: sum
     sql: ${TABLE}."SUPPORT_O_MRR_END" ;;
@@ -429,8 +449,45 @@ view: account_changes_monthly {
     value_format: "$#,##0"
   }
 
+
   measure: count {
     type: count
     drill_fields: [account_name]
   }
+
+  measure: sum_newlogo {
+    type: sum
+    sql: CASE WHEN ${TABLE}."NL_MRR" IS NOT NULL AND ${TABLE}."NL_MRR" != 0 THEN 1 ELSE 0 END ;;
+    label: "Total New Logos"
+  }
+
+  measure: sum_churnlogo {
+    type: sum
+    sql: CASE WHEN ${TABLE}."CHURN_MRR" IS NOT NULL AND ${TABLE}."CHURN_MRR"  != 0 THEN 1 ELSE 0 END ;;
+    label: "Total Churn Logos"
+  }
+
+  dimension: manual_fiscal_yearquarter {
+    type: string
+    sql: ${TABLE}."FISCAL_YEARQUARTER" ;;
+  }
+
+  dimension: quarter_maxdate {
+    type: date
+    sql: ${TABLE}."QUARTER_MAXDATE" ;;
+  }
+  dimension: quarter_mindate {
+    type: date
+    sql: ${TABLE}."QUARTER_MINDATE" ;;
+  }
+
+  dimension: is_max_date {
+    type: string
+    sql: ${TABLE}."IS_MAX_DATE" ;;
+  }
+  dimension: is_min_date {
+    type: string
+    sql: ${TABLE}."IS_MIN_DATE" ;;
+  }
+
 }

@@ -1,5 +1,5 @@
 view: account_changes_quarterly {
-  sql_table_name: "DBT_RIYA"."ACCOUNT_CHANGES_QUARTERLY"
+  sql_table_name: "FT_TRANSFORMATION"."ACCOUNT_CHANGES_QUARTERLY"
     ;;
 
   dimension: account_id {
@@ -12,6 +12,22 @@ view: account_changes_quarterly {
     sql: ${TABLE}."ACCOUNT_NAME" ;;
   }
 
+  dimension: renewal_quarter {
+    type: number
+    sql: ${TABLE}."RENEWAL_QUARTER" ;;
+  }
+
+  dimension: is_active {
+    type: yesno
+    sql: ${account_dimensions.first_active_fiscal_quarter} != ${first_day_of_quarter_fiscal_quarter};;
+    label: "Is Active Customer?"
+  }
+
+  dimension: churn_quarter {
+    type: number
+    sql: ${TABLE}."CHURN_QUARTER" ;;
+  }
+
   measure: c_mrr_end {
     type: sum
     sql: ${TABLE}."C_MRR_END" ;;
@@ -22,6 +38,42 @@ view: account_changes_quarterly {
     sql: ${TABLE}."C_MRR_END" * 12 ;;
   }
 
+  measure: quarter_rollback_mrr {
+    type: sum
+    sql: ${TABLE}."QUARTER_ROLLBACK_MRR" ;;
+  }
+
+  measure: quarter_rollback_arr {
+    type: sum
+    sql: ${TABLE}."QUARTER_ROLLBACK_MRR" * 12 ;;
+  }
+
+
+  measure: percent_growth_annualized {
+    type: number
+    sql: (${c_arr_end}/${quarter_rollback_arr})-1 ;;
+    value_format: "0\%"
+  }
+
+  measure: percent_arr_total {
+    type: percent_of_total
+    sql: ${account_changes_quarterly.c_arr_end};;
+    label: "Percent ARR of Total"
+    direction: "column"
+  }
+
+  measure: percent_arr_cumulative {
+    type: number
+    sql: sum(${percent_arr_total}) over(partition by account_dimensions.account_name order by first_day_of_quarter_date asc)/100 ;;
+    label: "Percent ARR Cumulative"
+  }
+
+measure: running_total_account {
+  type: running_total
+  sql: ${account_dimensions.count} ;;
+  label: "Running Total # of Accounts"
+  direction: "column"
+}
 
   measure: c_mrr_start {
     type: sum
@@ -66,6 +118,13 @@ view: account_changes_quarterly {
   measure: email_o_mrr {
     type: sum
     sql: ${TABLE}."EMAIL_O_MRR" ;;
+  }
+
+  measure: nn_arr {
+    type: number
+    sql: ${upgrade_arr}+${nl_arr}+${downgrade_arr}+(${churn_arr}*-1) ;;
+    label: "Net New ARR"
+
   }
 
   dimension_group: first_day_of_quarter {
@@ -173,4 +232,25 @@ view: account_changes_quarterly {
     type: count
     drill_fields: [account_name]
   }
+  measure: count_churn {
+    type: count
+    sql_distinct_key: ${account_dimensions.account_id} ;;
+    filters: {
+      field: churn_quarter
+      value: "1"
+    }
+    label: "# Churned Accounts"
+    drill_fields: [account_name]
 }
+
+  measure: count_renewal {
+    type: count
+    sql_distinct_key: ${account_dimensions.account_id} ;;
+    filters: {
+      field: renewal_quarter
+      value: "1"
+    }
+    label: "# Accounts up for Renewal"
+    drill_fields: [account_name]
+  }
+  }

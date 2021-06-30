@@ -1,5 +1,5 @@
 view: all_customers {
-  sql_table_name: "DBT_RIYA"."ALL_CUSTOMERS"
+  sql_table_name: "FT_TRANSFORMATION"."ALL_CUSTOMERS"
     ;;
 
   dimension: account_id {
