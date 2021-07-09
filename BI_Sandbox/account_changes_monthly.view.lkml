@@ -75,7 +75,7 @@ view: account_changes_monthly {
     type: sum
     sql: ${TABLE}."C_MRR_END" ;;
     label: "C_MRR_END"
-    drill_fields: [sfdc_account_id,account_name,start_period_date,c_mrr_start,c_mrr_end]
+    drill_fields: [sfdc_account_id,account_name,account_dimensions.cs_market_segment,account_dimensions.market_segment_of_owner,start_period_date,c_mrr_start,c_mrr_end]
     value_format: "$#,##0"
   }
 
@@ -83,7 +83,7 @@ view: account_changes_monthly {
     type: sum
     sql: ${TABLE}."C_MRR_END" * 12 ;;
     label: "C_ARR_END"
-    drill_fields: [sfdc_account_id,account_name,start_period_date,c_mrr_start,c_mrr_end]
+    drill_fields: [sfdc_account_id,account_name,account_dimensions.cs_market_segment,account_dimensions.market_segment_of_owner,start_period_date,c_mrr_start,c_mrr_end]
     group_label: "Commited Revenue"
     value_format: "$#,##0"
   }
@@ -99,7 +99,7 @@ view: account_changes_monthly {
     type: sum
     sql: ${TABLE}."C_MRR_START" * 12 ;;
     label: "C_ARR_START"
-    drill_fields: [sfdc_account_id,account_name,start_period_date,c_arr_start,c_arr_end]
+    drill_fields: [sfdc_account_id,account_name,account_dimensions.cs_market_segment,account_dimensions.market_segment_of_owner,start_period_date,c_arr_start,c_arr_end]
     group_label: "Commited Revenue"
     value_format: "$#,##0"
   }
@@ -136,7 +136,7 @@ view: account_changes_monthly {
     type: sum
     sql: ${TABLE}."CHURN_MRR" * 12  ;;
     label: "CHURN_ARR"
-    drill_fields: [sfdc_account_id,account_name,start_period_date,c_arr_start,c_arr_end]
+    drill_fields: [sfdc_account_id,account_name,account_dimensions.cs_market_segment,account_dimensions.market_segment_of_owner,start_period_date,c_arr_start,c_arr_end]
     group_label: "Churn"
     value_format: "$#,##0"
   }
@@ -167,6 +167,7 @@ view: account_changes_monthly {
     label: "DOWNGRADE_ARR"
     group_label: "Downgrades"
     value_format: "$#,##0"
+    drill_fields: [sfdc_account_id,account_name,account_dimensions.cs_market_segment,account_dimensions.market_segment_of_owner,start_period_date,c_mrr_start,c_mrr_end]
   }
 
   measure: email_o_mrr_end {
@@ -220,7 +221,7 @@ view: account_changes_monthly {
     type: sum
     sql: ${TABLE}."NL_MRR"  * 12 ;;
     label: "NL_ARR"
-    drill_fields: [sfdc_account_id,account_name,start_period_date,c_arr_start,c_arr_end]
+    drill_fields: [sfdc_account_id,account_name,account_dimensions.cs_market_segment,account_dimensions.market_segment_of_owner,start_period_date,c_arr_start,c_arr_end]
     group_label: "New Lands"
     value_format: "$#,##0"
   }
@@ -445,7 +446,7 @@ view: account_changes_monthly {
     sql: ${TABLE}."UPGRADE_MRR" * 12;;
     label: "UPGRADE_ARR"
     group_label: "UPGRADES"
-    drill_fields: [sfdc_account_id,account_name,start_period_date,c_arr_start,c_arr_end]
+    drill_fields: [sfdc_account_id,account_name,account_dimensions.cs_market_segment,account_dimensions.market_segment_of_owner,start_period_date,c_mrr_start,c_mrr_end]
     value_format: "$#,##0"
   }
 
