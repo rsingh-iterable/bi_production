@@ -170,6 +170,11 @@ view: account_dimensions {
     sql: ${TABLE}."IMPLEMENTATION_PACKAGE_C" ;;
   }
 
+  dimension: support_package {
+    type: string
+    sql: ${TABLE}."SUPPORT_PACKAGE" ;;
+  }
+
   dimension_group: implementation_start {
     type: time
     timeframes: [

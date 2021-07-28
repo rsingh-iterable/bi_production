@@ -136,7 +136,7 @@ view: account_changes_monthly {
     type: sum
     sql: ${TABLE}."CHURN_MRR" * 12  ;;
     label: "CHURN_ARR"
-    drill_fields: [sfdc_account_id,account_name,account_dimensions.cs_market_segment,account_dimensions.market_segment_of_owner,start_period_date,c_arr_start,c_arr_end]
+    drill_fields: [sfdc_account_id,account_name,account_dimensions.cs_market_segment,account_dimensions.market_segment_of_owner,start_period_date,c_arr_start,c_arr_end, churn_arr]
     group_label: "Churn"
     value_format: "$#,##0"
   }
@@ -452,7 +452,8 @@ view: account_changes_monthly {
 
 
   measure: count {
-    type: count
+    type: count_distinct
+    sql_distinct_key: sfdc_account_id ;;
     drill_fields: [account_name]
   }
 
