@@ -176,6 +176,7 @@ measure: running_total_account {
   measure: nl_arr {
     type: sum
     sql: ${TABLE}."NL_MRR" * 12 ;;
+    drill_fields: [account_name, account_id,c_arr_start,c_arr_end,nl_arr]
   }
 
   measure: o_mrr {
@@ -226,6 +227,7 @@ measure: running_total_account {
   measure: upgrade_arr {
     type: sum
     sql: ${TABLE}."UPGRADE_MRR" * 12 ;;
+    drill_fields: [account_name, account_id,c_arr_start,c_arr_end,upgrade_arr]
   }
 
   measure: count {
